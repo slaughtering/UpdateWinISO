@@ -46,7 +46,7 @@ jobs:
       shell: cmd
       run: |
         :: (可选)替换预设文件W10UI.ini
-        :: copy D:\a\UpdateWinISO\UpdateWinISO\myini\W10UI.ini D:\a\UpdateWinISO\Win_ISO_Patching_Scripts\W10UI.ini /Y
+        copy D:\a\UpdateWinISO\UpdateWinISO\myini\W10UI.ini D:\a\UpdateWinISO\Win_ISO_Patching_Scripts\W10UI.ini /Y
 
         :: 替换W10UI.cmd
         copy D:\a\UpdateWinISO\UpdateWinISO\mycmd\W10UI.cmd D:\a\UpdateWinISO\Win_ISO_Patching_Scripts\W10UI.cmd /Y
@@ -66,22 +66,8 @@ jobs:
         del /F /S /Q zh-cn_windows_10_consumer_editions_version_22h2_updated_oct_2025_x64_dvd_38efd00d.iso
         dir
 
-    # 打包
-    - name: Package binaries
-      run: |
-        #ls     #Directory: D:\a\UpdateWinISO\UpdateWinISO(即仓库目录)
-        7z a -v1950M ${{env.FILE_NAME}}-${{env.Build_VERSION}}.7z ../Win_ISO_Patching_Scripts/*.iso -mx=9
-
     # 上传镜像
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v7
       with:
-        name: ${{env.FILE_NAME}}-${{env.Build_VERSION}}
-        path: ${{env.FILE_NAME}}-${{env.Build_VERSION}}.7z*
-
-    # 发布镜像
-    - name: Release
-      uses: softprops/action-gh-release@v2
-      with:
-        tag_name: ${{env.FILE_NAME}}-${{env.Build_VERSION}}
-        release_name: ${{env.FILE_NAME}}-${{env.Build_VERSION}}
-        files: ${{env.FILE_NAME}}-${{env.Build_VERSION}}.7z*
+        path: ../Win_ISO_Patching_Scripts/*.iso
+        archive: false
