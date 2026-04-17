@@ -3806,7 +3806,7 @@ call :DIR2ISO . "%isofile%" %_u_% "%isover%"
 )
 call set errcode=!errorlevel!
 if not exist "%isofile%" set errcode=1
-if %errcode% equ 0 move /y "%isofile%" "!isodir!\" %_Nul3%
+if %errcode% equ 0 move /y "%isofile%" "!isodir!\%isofile%.zip" %_Nul3%
 cd /d "!_work!"
 if %errcode% equ 0 if %delete_source% equ 1 rmdir /s /q "!target!\" %_Nul1%
 if %errcode% equ 0 if exist "!_work!\DVD10UI\" rmdir /s /q "!_work!\DVD10UI\" %_Nul1%
